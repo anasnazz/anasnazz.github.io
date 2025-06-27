@@ -1,10 +1,18 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useVelocity } from 'framer-motion';
-import { Box, Typography } from '@mui/material';
-import Image from 'next/image';
-import logo from '../../public/logo.svg';
+import React, { useState, useEffect } from "react";
+import { motion, useScroll, useVelocity } from "framer-motion";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import Image from "next/image";
+import logo from "../../public/logo.svg";
 
 function Navbar() {
   const slideDistance = 80;
@@ -13,6 +21,7 @@ function Navbar() {
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
 
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [isScrollingBack, setIsScrollingBack] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isInView, setIsInView] = useState(true);
@@ -41,85 +50,120 @@ function Navbar() {
   return (
     <motion.div
       animate={{ y: isInView ? 0 : -slideDistance }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
       style={{
-        height: slideDistance,
-        width: '100%',
-        backgroundColor: '#ffffff',
-        position: 'fixed',
+        zIndex: 1000,
+        display: "flex",
         top: 0,
         left: 0,
-        zIndex: 9999,
-        padding: '0 20px',
-        display: 'flex',
-        alignItems: 'center',
+        height: slideDistance,
+        width: "100%",
+        padding: "0 0 !important",
+        alignItems: "stretch",
+        backgroundColor: "#ffffff",
       }}
     >
       <Box
         sx={{
-          zIndex: 1000,
-          maxWidth: '1170px',
-          mx: 'auto',
-          px: '20px',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          maxWidth: "1170px",
+          mx: "auto",
+          px: "20px",
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            pt: '20px',
-            pb: '10px',
+            display: "flex",
+            alignItems: "center",
+            pt: "20px",
+            pb: "10px",
           }}
         >
-          <Image
-            src={logo}
-            alt="mat logo"
-            width={110}
-            height={40}
-            style={{
-              objectFit: 'contain',
-              objectPosition: '0% 50%',
-              height: 'auto',
+          <Box
+            sx={{
+              position: "relative",
+              width: { xs: "80px", sm: "105px", md: "110px" }, // responsive widths
+              height: { xs: "36px", sm: "38px", md: "40px" }, // responsive heights
             }}
-          />
+          >
+            <Image
+              src={logo}
+              alt="mat logo"
+              fill
+              style={{
+                objectFit: "contain",
+                objectPosition: "left center",
+              }}
+              priority
+            />
+          </Box>
         </Box>
 
         <Box
           sx={{
-            zIndex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            pt: '6px',
-            pb: '6px',
+            // zIndex: 1,
+            display: { xs: "none", md: "flex" },
+            alignItems: "center",
+            pt: "6px",
+            pb: "6px",
           }}
         >
-          {['Projects', 'Resume', 'Contact'].map((item) => (
+          {["Projects", "Resume", "Contact"].map((item) => (
             <Typography
               key={item}
               sx={{
-                display: 'inline-block',
-                position: 'relative',
-                ml: '40px',
-                px: '20px',
-                py: '10px',
-                fontFamily: 'Manrope, sans-serif',
-                fontSize: { xs: '18px', md: '24px' },
-                fontWeight: 500,
-                color: '#000',
-                cursor: 'pointer',
-                transition: 'color 0.3s ease',
-                '&:hover': {
-                  color: '#666',
+                display: "inline-block",
+                position: "relative",
+                ml: "40px",
+                px: "20px",
+                py: "10px",
+                fontFamily: "Manrope, sans-serif",
+                fontSize: { xs: "18px", md: "24px" },
+                fontWeight: 400,
+                lineHeight: 1.5,
+                color: "#000",
+                cursor: "pointer",
+                transition: "color 0.3s ease",
+                "&:hover": {
+                  color: "#666",
                 },
               }}
             >
               {item}
             </Typography>
           ))}
+        </Box>
+
+        {/* Hamburger menu for small screens */}
+        <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+          <IconButton onClick={() => setDrawerOpen(true)} size="large">
+            <MenuIcon />
+          </IconButton>
+          <Drawer
+            anchor="right"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+          >
+            <List sx={{ width: "200px" }}>
+              {["Projects", "Resume", "Contact"].map((item) => (
+                <ListItem
+                  button
+                  key={item}
+                  sx={{
+                    px: 3,
+                    py: 2,
+                    fontSize: { xs: "16px", sm: "18px", md: "20px" },
+                    fontFamily: "Manrope, sans-serif",
+                  }}
+                >
+                  {item}
+                </ListItem>
+              ))}
+            </List>
+          </Drawer>
         </Box>
       </Box>
     </motion.div>

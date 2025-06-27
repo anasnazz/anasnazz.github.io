@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@theme": ["./src/styles/theme.js"],
+      "@navbar": ["./src/components/navbar.js"],
+      "@useBreakpoints": ["./src/hooks/useBreakpoints.js"],
     }
   }
 }

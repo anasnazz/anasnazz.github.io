@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
 import Navbar from '../../components/navbar';
-import SectionHero from './hero';
+import SectionHero from './hero_tmp';
 // import SectionMarquee from './components/SectionMarquee';
 // import SectionFooter from './components/SectionFooter';
 
