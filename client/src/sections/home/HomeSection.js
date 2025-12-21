@@ -2,7 +2,7 @@
 import Box from "@mui/material/Box";
 import { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-const SectionHero = dynamic(() => import("./hero"), { ssr: false });
+const SectionHero = dynamic(() => import("./hero_tmp"), { ssr: false });
 
 export default function HomeSection() {
   const ref = useRef(null);

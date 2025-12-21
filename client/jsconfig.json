@@ -5,6 +5,7 @@
       "@theme": ["./src/styles/theme.js"],
       "@navbar": ["./src/components/navbar.js"],
       "@useBreakpoints": ["./src/hooks/useBreakpoints.js"],
+      "@SectionHero": ["./src/sections/home/HomeSection_tmp.js"]
     }
   }
 }
