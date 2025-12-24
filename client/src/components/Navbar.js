@@ -10,12 +10,14 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuIcon from "./icons/MenuIcon";
 import Image from "next/image";
 import logo from "../../public/logo.svg";
+import useBreakpoint from "../hooks/useBreakpoints";
 
 function Navbar() {
-  const slideDistance = 80;
+  const { isMdDown } = useBreakpoint();
+  const slideDistance = isMdDown ? 64 : 80;
   const threshold = 200;
 
   const { scrollY } = useScroll();
@@ -48,6 +50,7 @@ function Navbar() {
   }, [isScrollingBack, isAtTop]);
 
   return (
+    <Box sx={{ mt: 0, py: { xs: 0, md: "10px" }, width: "100%", position: 'relative', zIndex: 10 }}>
     <motion.div
       animate={{ y: isInView ? 0 : -slideDistance }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -78,20 +81,20 @@ function Navbar() {
           sx={{
             display: "flex",
             alignItems: "center",
-            pt: "20px",
-            pb: "10px",
+            pt: { xs: "20px", md: "20px" },
+            pb: { xs: "10px", md: "10px" },
           }}
         >
           <Box
             sx={{
               position: "relative",
-              width: { xs: "80px", sm: "105px", md: "110px" }, // responsive widths
-              height: { xs: "36px", sm: "38px", md: "40px" }, // responsive heights
+              width: { xs: "100px", sm: "105px", md: "110px" }, 
+              height: { xs: "36px", sm: "38px", md: "40px" }, 
             }}
           >
             <Image
               src={logo}
-              alt="mat logo"
+              alt="MD.AT logo"
               fill
               style={{
                 objectFit: "contain",
@@ -140,7 +143,7 @@ function Navbar() {
         {/* Hamburger menu for small screens */}
         <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
           <IconButton onClick={() => setDrawerOpen(true)} size="large">
-            <MenuIcon />
+            <MenuIcon color="#000000" size={36} />
           </IconButton>
           <Drawer
             anchor="right"
@@ -167,6 +170,7 @@ function Navbar() {
         </Box>
       </Box>
     </motion.div>
+    </Box>
   );
 }
 

@@ -1,17 +1,47 @@
 "use client";
-
-import { Container, Box } from "@mui/material";
-import HomeSection from "../sections/home/HomeSection";
+import Box from "@mui/material/Box";
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
-const Navbar = dynamic(() => import("@navbar"), { ssr: false });
 
-export default function home() {
+const SectionHero = dynamic(() => import("@SectionHero"), { ssr: false });
+
+export default function Home() {
+
+  useEffect(() => {
+    if (window.innerWidth < 600) return;
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    const navbarHeight = 10;
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: navbarHeight,
+        behavior: "instant" 
+      });
+    }, 10);
+
+  }, []);
+
   return (
-    <Box>
-      <Box sx={{ mt: 0, py: "10px", width: "100%" }}>
-        <Navbar />
+    <Box
+      sx={{
+        // paddingTop: {xs: "20px", md: "unset"},
+        position: "relative",
+        overflow: "hidden"
+      }}
+    >
+      <Box
+        sx={{
+          minHeight: "100vh",
+          width: "100%"
+        }}
+      >
+        <SectionHero />
       </Box>
-      <HomeSection />
+      {/* <Box sx={{ height: "600vh" }} /> */}
     </Box>
   );
 }

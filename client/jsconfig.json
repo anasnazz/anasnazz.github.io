@@ -2,10 +2,10 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@theme": ["./src/styles/theme.js"],
-      "@navbar": ["./src/components/navbar.js"],
+      "@Theme": ["./src/styles/theme.js"],
+      "@Navbar": ["./src/components/Navbar.js"],
       "@useBreakpoints": ["./src/hooks/useBreakpoints.js"],
-      "@SectionHero": ["./src/sections/home/HomeSection_tmp.js"]
+      "@SectionHero": ["./src/sections/home/SectionHero.js"]
     }
   }
 }

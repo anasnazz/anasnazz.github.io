@@ -7,24 +7,35 @@ import { Container, Box, Typography } from "@mui/material";
 import Image from "next/image";
 import SelfPortrait from "../../../public/self_portrait.png";
 import useBreakpoint from "@useBreakpoints";
+import AnimatedLink from "@/components/AnimatedLink";
 
 function SectionHero() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-  });
-
-  const x = useTransform(scrollYProgress, [0.1, 1], ["0%", "60%"]);
-  const invertedX = useTransform(scrollYProgress, [0.1, 1], ["0%", "-40%"]);
+  const { scrollY } = useScroll();
 
   const bp = useBreakpoint();
+  const scrollEnd = bp.isMdUp ? 1000 : 400;
+  const scrollStart = bp.isMdUp ? 110 : 0;
+
+  const xStart = bp.isMdUp ? "0%" : "5%";
+  const xEnd = bp.isMdUp ? "60%" : "48%";
+
+  const invStart = bp.isMdUp ? "0%" : "5%";
+  const invEnd = bp.isMdUp ? "-40%" : "-30%";
+
+  const x = useTransform(scrollY, [scrollStart, scrollEnd], [xStart, xEnd]);
+  const invertedX = useTransform(scrollY, [scrollStart, scrollEnd], [invStart, invEnd]);
+
   const heroHelloTop = bp.isMdUp ? "80px" : "0px";
 
   return (
     <Container
-      ref={ref}
-      disableGutters
+      maxWidth={false}
       sx={{
+        maxWidth: "1170px",
+        marginLeft: "auto",
+        marginRight: "auto",
+        padding: { xs: "3rem 20px", md: "1.5rem 20px" },
         zIndex: 0,
       }}
     >
@@ -62,7 +73,7 @@ function SectionHero() {
       <Box
         sx={{
           position: "relative",
-          top: { xs: "-50px", md: "unset" },
+          top: { xs: "-40px", md: "unset" },
         }}
       >
         <Box
@@ -82,7 +93,7 @@ function SectionHero() {
           <Box
             sx={{
               gridRow: "1 / 4",
-              gridColumn: { xs: "1 / 3", sm: "2 / 6" },
+              gridColumn: { xs: "1 / 3", sm: "1 / 4", md: "2 / 6" },
               // gridColumnEnd: {
               //   sm: "3",
               //   md: "4",
@@ -199,12 +210,17 @@ function SectionHero() {
           {/* Description */}
           <Box
             sx={{
+              // Align vertically: Mobile = row 4, Desktop = row 3 (bottom of image)
               gridRow: { xs: "4 / 5", md: "3 / 4" },
-              gridColumn: "6 / 9",
-              gridColumnStart: {
-                xs: 1,
-                md: "unset", 
+
+              // Align horizontally: Mobile = full width, Desktop = Cols 6 to 9 (Right of image)
+              gridColumn: {
+                xs: "1 / 4", // Spans the specific mobile grid columns defined in parent
+                sm: "1 / 4", // Adjust based on your tablet grid
+                md: "6 / 9", // THIS aligns it to the right of the image
               },
+
+              // Remove gridColumnStart - it was breaking the alignment
               alignSelf: "end",
             }}
           >
@@ -232,7 +248,39 @@ function SectionHero() {
               </Typography>
             </motion.div>
           </Box>
-          
+        </Box>
+        <Box
+          sx={{
+            padding: "3rem 0px",
+            maxWidth: "1170px",
+            margin: "0 auto",
+            width: "100%",
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-between",
+            alignItems: { xs: "flex-start", md: "center" },
+            gap: { xs: "20px", md: "0" },
+          }}
+        >
+          {/* Socials Group */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: { xs: "0px", sm: "20px" }, // Added gap between links
+            }}
+          >
+            <AnimatedLink href="https://instagram.com/anas.nazz">Instagram</AnimatedLink>
+            <AnimatedLink href="https://www.linkedin.com/in/anas-nazz">LinkedIn</AnimatedLink>
+            <AnimatedLink href="https://github.com/anasnazz">GitHub</AnimatedLink>
+          </Box>
+
+          {/* Email Group */}
+          <Box sx={{ alignSelf: { xs: "flex-start", md: "center" } }}>
+            <AnimatedLink href="mailto:anastnazz@gmail.com">
+              anastnazz@gmail.com
+            </AnimatedLink>
+          </Box>
         </Box>
       </Box>
     </Container>
